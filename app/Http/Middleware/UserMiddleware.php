@@ -8,7 +8,7 @@ use App\Models\Role;
 use Symfony\Component\HttpFoundation\Response;
 use Illumanate\Support\Facades\Auth;
 
-class AdminMiddleware
+class UserMiddleware
 {
     /**
      * Handle an incoming request.
@@ -21,7 +21,7 @@ class AdminMiddleware
     {
         if(Auth::user()){
             $role = Role::where('id', auth()->role_id)->first();
-            if($role->id == 1 ){
+            if($role->id == 2 ){
                 return $next($request);
             }
         }
