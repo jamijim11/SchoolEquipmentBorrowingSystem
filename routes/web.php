@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -8,28 +10,23 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::group(attributes: ['middleware' => 'admin', 'prefix' => 'admin'], routes: function(){
-Route::get('/dashboard', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('dashboard');
-});
-    
+
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/', function(){
-    return redirect()->route('register');
-});
-
-
-Route::get('/', function(){
     return redirect()->route('login');
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
+    Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin.index');
 
+});
+
+Route::group( ['prefix' => 'user', 'middleware' => ['user']], function () {
+    Route::get('/', [App\Http\Controllers\User\UserController::class, 'index'])->name('user.index');
+
+});

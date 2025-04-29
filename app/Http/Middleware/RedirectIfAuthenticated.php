@@ -6,7 +6,8 @@ use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Role;    
+use App\Models\User;
 class RedirectIfAuthenticated
 {
     /**
@@ -24,7 +25,7 @@ class RedirectIfAuthenticated
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
                 $role = Role::where('id', auth()->user()->role_id)->first();
-                if($roles){
+                if($role){
                   return redirect($role->url);
                 }
             }
