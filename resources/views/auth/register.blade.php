@@ -55,6 +55,19 @@
                                 <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                             </div>
                         </div>
+                        <div class="mb-3">
+                            <label for="role_id" class="form-label">Register As</label>
+                            <select id="role_id" name="role_id" class="form-control @error('role_id') is-invalid @enderror" required>
+                                <option value="">-- Select Role --</option>
+                                <option value="1" {{ old('role_id') == 1 ? 'selected' : '' }}>Admin</option>
+                                <option value="2" {{ old('role_id') == 2 ? 'selected' : '' }}>User</option>
+                            </select>
+                            @error('role_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
 
                         <div class="mb-3">
                             <label for="password-confirm" class="form-label">Confirm Password</label>
